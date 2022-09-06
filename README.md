@@ -17,10 +17,12 @@ We will first implement a model using Keras to see the feasibility of the projec
 
 For more details, please refer to the report associated with this project.
 
-## Requirements
+## Getting started
 
-## Usage
+This project was built using Pyhon 3.9.
 
-After downloading this repository, you can use one of the two following methods to run the code :
-1. You can run the provided notebook that contains some details on the implementation.
-2. You can run the main file by running the command `python3 main.py`.
+Run the following command to get the required Python libraries :
+`pip install -r requirements.txt`
+
+The Python files contains a neural network model coded from scratch and the notebook contains the same model implemented with Keras.
+
