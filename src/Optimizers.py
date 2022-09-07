@@ -1,28 +1,22 @@
 ##### OPTIMIZERS
 
-class Optim:
-    def __init__(self,net,loss,eps=1e-3):
-        self.net = net
-        self.loss = loss
-        self.eps = eps
+# class Optim:
+#     def __init__(self,net,loss,eps=1e-3):
+#         self.net = net
+#         self.loss = loss
+#         self.eps = eps
 
-    def step(self,batch_x,batch_y):
-        # Forward pass
-        z = self.net.forward_pass(batch_x)
-        # Loss
-        loss = self.loss.forward(batch_y,z)
-        # Gradient of the loss
-        g_loss = self.loss.backward(batch_y,z)
-        # Backpropagation
-        delta = self.net.backpropagation(batch_x,g_loss)
-        # Update parameters
-        self.net.update_parameters(learning_rate=self.eps)
-
-        return z,loss
+#     def step(self,batch_x,batch_y):
+#         pass
 
 class Optimizer_SGD:
-    def __init__(self,learning_rate=0.01):
+    def __init__(self, learning_rate=0.001):
         self._learning_rate = learning_rate
+    
+    def update_parameters(self,layer):
+        if layer._linear:
+            layer._weights -= self._learning_rate * layer._dweights
+            layer._biases -= self._learning_rate * layer._dbiases
 
     
 

@@ -36,69 +36,56 @@ def prediction_toy(z,activation='Sigmoide'):
 if __name__ == '__main__':
 
     # Create dataset
-    X, y = make_moons(n_samples=300, random_state=42)
+    X, y = make_moons(n_samples=100, noise=0.1, random_state=42)
 
     # plt.figure()
     # plt.scatter(X[:,0],X[:,1],c=y)
     # plt.show()
 
-    y = one_hot(y,3)
+    y = one_hot(y,2)
 
-    # Create Dense layer with 2 input features and 3 output values
-    dense1 = Linear(2, 3)
-
-    # Create ReLU activation (to be used with Dense layer):
+    # Building model
+    dense1 = Linear(2,4)
     activation1 = ReLU()
+    dense2 = Linear(4,2)
+    activation2 = Softmax()
+    loss = BCELoss()
+    optimizer=Optimizer_SGD(learning_rate=0.001)
+    model = Sequential([dense1,activation1,dense2,activation2],loss=loss,optimizer=optimizer)
 
-    # Create second Dense layer with 3 input features (as we take output
-    # of previous layer here) and 3 output values (output values)
-    dense2 = Linear(3, 3)
+    # Training model
+    train_losses,train_accuracy,val_losses,val_accuracy = model.fit(X,y,epochs=20,batch_size=10,verbose=False)
 
-    # Create Softmax classifier's combined loss and activation
-    loss_activation = Softmax_CELoss()
+    # print(train_losses)
+    # print(train_accuracy)
 
-    # Perform a forward pass of our training data through this layer
-    z1 = dense1.forward(X)
+    # plt.figure()
+    # plt.imshow(train_losses)
+    # plt.title("Training loss heatmap")
+    # plt.xlabel("steps")
+    # plt.ylabel("epochs")
+    # plt.colorbar()
 
-    # Perform a forward pass through activation function
-    # takes the output of first dense layer here
-    a1 = activation1.forward(z1)
+    # plt.figure()
+    # plt.imshow(train_accuracy)
+    # plt.title("Training accuracy heatmap")
+    # plt.xlabel("steps")
+    # plt.ylabel("epochs")
+    # plt.colorbar()
 
-    # Perform a forward pass through second Dense layer
-    # takes outputs of activation function of first layer as inputs
-    z2 = dense2.forward(a1)
+    plt.figure()
+    plt.plot(train_losses.mean(axis=1))
+    plt.title("Training loss")
+    plt.xlabel("epochs")
 
-    # Perform a forward pass through the activation/loss function
-    # takes the output of second dense layer here and returns loss
-    loss = loss_activation.forward(y,z2)
-    # Let's see the output of the first few samples:
-    print(loss_activation._softmax_outputs[:5])
+    plt.figure()
+    plt.plot(train_accuracy.mean(axis=1))
+    plt.title("Training accuracy")
+    plt.xlabel("epochs")
 
-    # Print loss value
-    print('loss:', loss.mean())
+    plt.show()
 
-    # Calculate accuracy from output of activation2 and targets
-    # calculate values along first axis
-    predictions = np.argmax(loss_activation._softmax_outputs, axis=1)
-    if len(y.shape) == 2:
-        y_true = np.argmax(y, axis=1)
-    accuracy = np.mean(predictions==y_true)
 
-    # Print accuracy
-    print('acc:', accuracy)
-
-    # Backward pass
-    g1 = loss_activation.backward(y,loss_activation._softmax_outputs)
-    dense2.backward_update_gradient(a1,g1)
-    delta1 = dense2.backward_delta(a1,g1)
-    g2 = activation1.backward(z1,delta1)
-    dense1.backward_update_gradient(X,g2)
-
-    # Print gradients
-    print(dense1._dweights)
-    print(dense1._dbiases)
-    print(dense2._dweights)
-    print(dense2._dbiases)
 
 
     # MNIST DATASET
@@ -207,18 +194,18 @@ if __name__ == '__main__':
 
         #encoder = Sequentiel([layer1, hiddenlayer1, layer2, hiddenlayer2, layer3, hiddenlayer3])
         #encoder = Sequentiel([layer1, hiddenlayer1, layer3, hiddenlayer3])
-        encoder = Sequentiel([layer3, hiddenlayer3])
+        encoder = Sequential([layer3, hiddenlayer3])
 
         layer1bis = Linear(200,400)
         hiddenlayer1bis = TanH()
         layer2bis = Linear(256,512)
         hiddenlayer2bis = TanH()
         layer3bis = Linear(128,784)
-        hiddenlayer3bis = Sigmoide()
+        hiddenlayer3bis = Sigmoid()
 
         #decoder = Sequentiel([layer1bis, hiddenlayer1bis, layer2bis, hiddenlayer2bis, layer3bis, hiddenlayer3bis])
         #decoder = Sequentiel([layer1bis, hiddenlayer1bis, layer3bis, hiddenlayer3bis])
-        decoder = Sequentiel([layer3bis, hiddenlayer3bis])
+        decoder = Sequential([layer3bis, hiddenlayer3bis])
 
         L = BCELoss()
         autoEncoder = AutoEncoder(encoder,decoder,L)
