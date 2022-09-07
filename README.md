@@ -1,7 +1,10 @@
-# ImageDenoiser
-Denoising images using autoencoders coded from scratch.
+# ML-from-scratch
+Implementing a neural network from scratch.
 
 ## Introduction
+The objective of this work is to implement a neural network from scratch with no framework (only using Python and Numpy).
+
+We will then use it to build an autoencoder model to perform image denoising on the MNIST dataset. 
 
 An autoencoder is a type of neural network mainly used to learn an encoding of the input data, usually reducing dimensions. It is an unsupervised learning technique.
 
@@ -12,17 +15,21 @@ Autoencoders consist of 2 components :
 They can be used for several tasks : inpainting, clustering, visualisation, denoising images...
 We will focus on the latter application.
 
-The objective of this project is to train an autoencoder to denoise images. We will use the MNIST dataset.
-We will first implement a model using Keras to see the feasibility of the project. We will then try to do the same thing but from scratch, in order to focus on the maths that is involved in the process.
-
-For more details, please refer to the report associated with this project.
+All the math involved in the process is detailed below
 
 ## Getting started
 
 This project was built using Pyhon 3.9.
 
-Run the following command to get the required Python libraries :
-`pip install -r requirements.txt`
+Run the following command to install dependencies :
+```
+$ pip install -r requirements.txt
+```
+The Python files contains a neural network model coded from scratch that you can run with the following command :
+```
+python main.py
+```
+The notebook contains the same model implemented with Keras.
 
-The Python files contains a neural network model coded from scratch and the notebook contains the same model implemented with Keras.
+## The math
 
