@@ -2,9 +2,9 @@
 Implementing a neural network from scratch.
 
 ## Introduction
-The objective of this work is to implement a neural network from scratch with no framework (only using Python and Numpy).
+The objective of this work is to implement a **neural network from scratch** with no framework (only using Python and Numpy).
 
-We will then use it to build an autoencoder model to perform image denoising on the MNIST dataset. 
+We will then use it to build an **autoencoder** model to perform image denoising on the MNIST dataset. 
 
 An autoencoder is a type of neural network mainly used to learn an encoding of the input data, usually reducing dimensions. It is an unsupervised learning technique.
 
