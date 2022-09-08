@@ -33,4 +33,31 @@ The notebook contains the same model implemented with Keras.
 
 ## The math
 
-(coming soon)
+To train a neural network, we start by doing a forward pass through all the layers to compute the final output. We then evaluate the loss whose derivative tells us how to change the parameters (weights and biases of linear units) by calculating all gradients of all layers going backwards (that's the backpropagation) using the chain rule.
+
+Here, we will focus on the formulas of the different gradients involved in the process.
+
+We will note $X$ the input of the considered layer, $Z$ the output and $\nabla$ the gradient of the next layer.
+
+#### Linear unit
+* $Z = XW+B$ where $W$ and $B$ are respectively the weights and the bias of the linear unit.
+* $\frac{dZ}{dW} = X^T\nabla$
+* $\frac{dZ}{dB} = sum_{columns}\nabla$
+* $\frac{dZ}{dX} = \nabla W^T$
+
+#### ReLU
+* $Z = max(X,0)$
+* $\frac{dZ}{dX} = \mathbb{1}_{[X>0]}$
+
+#### TanH
+* $Z = \tanh(X)$
+* $\frac{dZ}{dX} = (1-\tanh(X)^2) * \nabla$ where $*$ denotes the element-wise multiplication
+
+#### Sigmoid
+* $Z = S(X) = \frac{1}{1+\exp(-X)}$
+* $\frac{dZ}{dX} = \nabla * (1-S(X)) * S(X)$
+
+#### Softmax
+* $Z = (\frac{\exp(X)}{\sum_{cols} \exp(X))})_{columns}$
+* $\frac{dZ}{dX} = \hat{Z} - Z$ where $\hat{Z} is the ouput of the softmax function when used with the cross entropy loss
+
