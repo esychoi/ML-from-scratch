@@ -59,5 +59,5 @@ We will note $X$ the input of the considered layer, $Z$ the output and $\nabla$ 
 
 #### Softmax
 * $Z = (\frac{\exp(X)}{\sum_{cols} \exp(X))})_{columns}$
-* $\frac{dZ}{dX} = \hat{Z} - Z$ where $\hat{Z} is the ouput of the softmax function when used with the cross entropy loss
+* $\frac{dZ}{dX} = \hat{Z} - Z$ where $\hat{Z}$ is the ouput of the softmax function when used with the cross entropy loss
 
