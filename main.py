@@ -14,7 +14,7 @@ from sklearn.datasets import make_moons, make_blobs
 
 if __name__ == '__main__':
 
-	moons = True
+	moons = False
 	if moons :
 		# Create dataset
 		X, y = make_moons(n_samples=3000, noise=0.2)
@@ -115,7 +115,7 @@ if __name__ == '__main__':
 		plt.show()
 
 
-	autoenc = False
+	autoenc = True
 	if autoenc: # MNIST DATASET
 		(X_train,y_true),(X_test,y_test) = mnist.load_data()
 		X_train,X_test = X_train.reshape(-1,784),X_test.reshape(-1,784)
