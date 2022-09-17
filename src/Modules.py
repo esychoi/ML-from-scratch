@@ -13,6 +13,7 @@ class Linear:
 		self._input = None
 		self._output = None
 		self._weights = 2 * (np.random.rand(n_input,n_output) - 0.5) #shape (n_input,n_output)
+		#self._weights = np.random.uniform(-np.sqrt(6/(n_input+n_output)),np.sqrt(6/(n_input+n_output)),size=(n_input,n_output))
 		self._biases = np.zeros((1,n_output)) #shape (1,n_output)
 		self._dweights = np.zeros((n_input,n_output)) #shape (n_input,n_output)
 		self._dbiases = np.zeros((1,n_output)) #shape (1,n_output)

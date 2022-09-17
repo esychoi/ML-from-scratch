@@ -38,7 +38,7 @@ class MSELoss(Loss):
 		y = y.reshape(-1,1)
 		yhat = yhat.reshape(-1,1)
 		n_samples,dim = y.shape
-		self._dinput = ((2*(yhat-y))/dim)/n_samples
+		self._dinput = ((2*(yhat-y))/dim)
 
 
 class CELoss(Loss):
@@ -80,7 +80,7 @@ class CELoss(Loss):
 
 		y_true = np.eye(n_classes)[y]
 		self._dinput = -y_true/yhat
-		self._dinput = self._dinput/n_samples
+		self._dinput = self._dinput
 
 
 class BCELoss(Loss):
@@ -109,16 +109,15 @@ class BCELoss(Loss):
 		args:
 			y: ground truth (sparse (1 binary class) or multi-label (several binary classes))
 			yhat: output of the last activation module
-		Computes and normalizes the gradient of the cross entropy
+		Computes the gradient of the cross entropy
 		"""
 		if len(y.shape) == 1:
 			y_true = y.reshape(-1,1)
 		else:
 			y_true = y
-		n_samples,n_classes = yhat.shape
+		n_classes = yhat.shape[1]
 		yhat_clipped = np.clip(yhat,1e-7,1-1e-7)
 		self._dinput = -((y_true/yhat_clipped) - ((1-y_true)/(1-yhat_clipped)))/n_classes # gradient
-		self._dinput = self._dinput/n_samples   #normalization
 
 class Softmax_CELoss(Loss): # CELoss with softmax input
 	"""
@@ -159,4 +158,4 @@ class Softmax_CELoss(Loss): # CELoss with softmax input
 		n_samples = y.shape[0]
 		self._dinput = yhat.copy()
 		self._dinput[range(n_samples),y] -= 1
-		self._dinput = self._dinput/n_samples
+		self._dinput = self._dinput
