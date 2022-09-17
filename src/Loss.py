@@ -37,7 +37,7 @@ class MSELoss(Loss):
 		"""
 		y = y.reshape(-1,1)
 		yhat = yhat.reshape(-1,1)
-		n_samples,dim = y.shape
+		dim = y.shape[1]
 		self._dinput = ((2*(yhat-y))/dim)
 
 
@@ -80,7 +80,6 @@ class CELoss(Loss):
 
 		y_true = np.eye(n_classes)[y]
 		self._dinput = -y_true/yhat
-		self._dinput = self._dinput
 
 
 class BCELoss(Loss):
@@ -158,4 +157,3 @@ class Softmax_CELoss(Loss): # CELoss with softmax input
 		n_samples = y.shape[0]
 		self._dinput = yhat.copy()
 		self._dinput[range(n_samples),y] -= 1
-		self._dinput = self._dinput
